@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float playerSpeed = 5f;
     [SerializeField] float jumpStrength = 10f;
     [SerializeField] float climbSpeed = 5f;
+    [SerializeField] float gravityAtStart = 1f;
 
     private void Awake()
     {
@@ -57,9 +58,14 @@ public class PlayerMovement : MonoBehaviour
 
     void ClimbLadder()
     {
-        if(capCollider2D.IsTouchingLayers(LayerMask.GetMask("Ladder")))
+        if (capCollider2D.IsTouchingLayers(LayerMask.GetMask("Ladder")))
         {
             rb2d.velocity = new Vector2(rb2d.velocity.x, moveInput.y * climbSpeed);
+            rb2d.gravityScale = 0f;
+        }
+        else
+        {
+            rb2d.gravityScale = gravityAtStart;
         }
     }
 
