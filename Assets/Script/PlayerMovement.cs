@@ -9,11 +9,13 @@ public class PlayerMovement : MonoBehaviour
 {
     Vector2 moveInput;
     Rigidbody2D rb2d;
+    Animator animator;
 
     [SerializeField] float playerSpeed = 5f;
     private void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -31,6 +33,9 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector2 playerVelocity = new Vector2(moveInput.x * playerSpeed, rb2d.velocity.y);
         rb2d.velocity = playerVelocity;
+
+        bool playerHasHorizontalSpeed = Mathf.Abs(rb2d.velocity.x) > Mathf.Epsilon;
+        animator.SetBool("isRunning", playerHasHorizontalSpeed);
     }
 
     void FlipSprite()
