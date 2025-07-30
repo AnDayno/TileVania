@@ -10,7 +10,8 @@ public class PlayerMovement : MonoBehaviour
     Vector2 moveInput;
     Rigidbody2D rb2d;
     Animator animator;
-    CapsuleCollider2D capCollider2D;
+    CapsuleCollider2D myBodyCollider;
+    BoxCollider2D myFeetCollider;
 
     [SerializeField] float playerSpeed = 5f;
     [SerializeField] float jumpStrength = 10f;
@@ -21,7 +22,8 @@ public class PlayerMovement : MonoBehaviour
     {
         rb2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        capCollider2D = GetComponent<CapsuleCollider2D>();
+        myBodyCollider = GetComponent<CapsuleCollider2D>(); 
+        myFeetCollider = GetComponent<BoxCollider2D>();
     }
 
     void Update()
@@ -41,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
     {
         LayerMask groundLayer = LayerMask.GetMask("Ground");
 
-        if(value.isPressed && capCollider2D.IsTouchingLayers(groundLayer))
+        if(value.isPressed && myFeetCollider.IsTouchingLayers(groundLayer))
         {
             rb2d.velocity += new Vector2(0f, jumpStrength);
         }
@@ -58,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
 
     void ClimbLadder()
     {
-        if (capCollider2D.IsTouchingLayers(LayerMask.GetMask("Ladder")))
+        if (myBodyCollider.IsTouchingLayers(LayerMask.GetMask("Ladder")))
         {
             rb2d.velocity = new Vector2(rb2d.velocity.x, moveInput.y * climbSpeed);
             rb2d.gravityScale = 0f;
