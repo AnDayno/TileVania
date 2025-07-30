@@ -19,16 +19,27 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         Run();
+        FlipSprite();
     }
 
     void OnMove(InputValue value)
     {
         moveInput = value.Get<Vector2>();
-        Debug.Log("Move Input: " + moveInput);
+        //Debug.Log("Move Input: " + moveInput);
     }
     void Run()
     {
         Vector2 playerVelocity = new Vector2(moveInput.x * playerSpeed, rb2d.velocity.y);
         rb2d.velocity = playerVelocity;
+    }
+
+    void FlipSprite()
+    {
+        bool playerHasHorizontalSpeed = Mathf.Abs(rb2d.velocity.x) > Mathf.Epsilon;
+
+        if (playerHasHorizontalSpeed)
+        {
+            transform.localScale = new Vector2(Mathf.Sign(rb2d.velocity.x), 1f);
+        }
     }
 }
