@@ -18,6 +18,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float climbSpeed = 5f;
     [SerializeField] float gravityAtStart = 1f;
 
+    bool isAlive = true;
+
     private void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
@@ -28,19 +30,23 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if (!isAlive) { return; }
         Run();
         FlipSprite();
         ClimbLadder();
+        Die();
     }
 
     void OnMove(InputValue value)
     {
+        if (!isAlive) { return; }
         moveInput = value.Get<Vector2>();
         //Debug.Log("Move Input: " + moveInput);
     }
 
     void OnJump(InputValue value)
     {
+        if (!isAlive) { return; }
         LayerMask groundLayer = LayerMask.GetMask("Ground");
 
         if(value.isPressed && myFeetCollider.IsTouchingLayers(groundLayer))
@@ -81,6 +87,14 @@ public class PlayerMovement : MonoBehaviour
         if (playerHasHorizontalSpeed)
         {
             transform.localScale = new Vector2(Mathf.Sign(rb2d.velocity.x), 1f);
+        }
+    }
+
+    void Die()
+    {
+        if(myBodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemies")))
+        {
+            isAlive = false;
         }
     }
 }
