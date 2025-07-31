@@ -14,12 +14,14 @@ public class PlayerMovement : MonoBehaviour
     BoxCollider2D myFeetCollider;
     SpriteRenderer spriteRenderer;
 
+    [SerializeField] GameObject gunBullet;
+    [SerializeField] Transform gunBarrel;
+
     [SerializeField] float playerSpeed = 5f;
     [SerializeField] float jumpStrength = 10f;
     [SerializeField] float climbSpeed = 5f;
     [SerializeField] float gravityAtStart = 1f;
     [SerializeField] Color32 deadColor = new Color32(255, 255,255, 255);
-
 
     bool isAlive = true;
 
@@ -56,6 +58,15 @@ public class PlayerMovement : MonoBehaviour
         if(value.isPressed && myFeetCollider.IsTouchingLayers(groundLayer))
         {
             rb2d.velocity += new Vector2(0f, jumpStrength);
+        }
+    }
+
+    void OnFire(InputValue value)
+    {
+        if (!isAlive) { return; }
+        if (value.isPressed)
+        {
+            Instantiate(gunBullet, gunBarrel.position, transform.rotation);
         }
     }
 
