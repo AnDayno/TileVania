@@ -12,11 +12,14 @@ public class PlayerMovement : MonoBehaviour
     Animator animator;
     CapsuleCollider2D myBodyCollider;
     BoxCollider2D myFeetCollider;
+    SpriteRenderer spriteRenderer;
 
     [SerializeField] float playerSpeed = 5f;
     [SerializeField] float jumpStrength = 10f;
     [SerializeField] float climbSpeed = 5f;
     [SerializeField] float gravityAtStart = 1f;
+    [SerializeField] Color32 deadColor = new Color32(255, 255,255, 255);
+
 
     bool isAlive = true;
 
@@ -26,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
         animator = GetComponent<Animator>();
         myBodyCollider = GetComponent<CapsuleCollider2D>(); 
         myFeetCollider = GetComponent<BoxCollider2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -94,7 +98,10 @@ public class PlayerMovement : MonoBehaviour
     {
         if(myBodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemies")))
         {
+            spriteRenderer.color = deadColor;
+            rb2d.velocity = new Vector2(rb2d.velocity.x, jumpStrength);
             isAlive = false;
+            animator.SetTrigger("Dying");
         }
     }
 }
