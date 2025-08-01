@@ -114,6 +114,7 @@ public class PlayerMovement : MonoBehaviour
             Destroy(myBodyCollider);
             isAlive = false;
             animator.SetTrigger("Dying");
+            FindObjectOfType<GameSession>().ProcessPlayerDeath();
         }
     }
 }
