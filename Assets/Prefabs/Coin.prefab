@@ -138,6 +138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coinPickup: {fileID: 8300000, guid: 8986350ab90c33c45adfb5991cbb8385, type: 3}
+  scoreValue: 100
 --- !u!82 &6044973828725421911
 AudioSource:
   m_ObjectHideFlags: 0
