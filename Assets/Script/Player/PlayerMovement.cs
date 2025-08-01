@@ -110,7 +110,8 @@ public class PlayerMovement : MonoBehaviour
         if(myBodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemies", "Hazards")))
         {
             spriteRenderer.color = deadColor;
-            rb2d.velocity = new Vector2(rb2d.velocity.x, jumpStrength);
+            rb2d.velocity = new Vector2(0f, jumpStrength);
+            Destroy(myBodyCollider);
             isAlive = false;
             animator.SetTrigger("Dying");
         }
