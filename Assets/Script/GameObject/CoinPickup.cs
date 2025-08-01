@@ -12,7 +12,7 @@ public class CoinPickup : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") && !isCollected)
         {
             isCollected = true;
             FindAnyObjectByType<GameSession>().AddToScore(scoreValue);
