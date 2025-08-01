@@ -25,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
 
     bool isAlive = true;
 
-    private void Awake()
+    private void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
